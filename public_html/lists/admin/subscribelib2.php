@@ -387,6 +387,11 @@ if (isset($_POST["subscribe"]) && is_email($_POST["email"]) && $listsok && $allt
   } else {
       print $thankyoupage;
       print '<p class="information">User has been added and confirmed</p>';
+       if (!TEST) {
+        $confirmMsg = getConfig("confirmationmessage");
+        $confirmationmessage = str_ireplace('[LISTS]', $lists,  $confirmMsg);
+        sendMail($"email", getConfig("confirmationsubject"), $confirmationmessage,system_messageheaders(),$envelope);
+       }
    }
 
    print '<p class="information">'.$PoweredBy.'</p>';

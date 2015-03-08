@@ -312,8 +312,13 @@ if (isset($_POST["subscribe"]) && is_email($_POST["email"]) && $listsok && $allt
 
    print '<title>'.$GLOBALS["strSubscribeTitle"].'</title>';
    print $subscribepagedata["header"];
-
-   if (isset($_SESSION["adminloggedin"]) && $_SESSION["adminloggedin"] && !(isset($_GET['p']) && $_GET['p'] == 'asubscribe')) {
+   
+    if ($_POST["makeconfirmed"] && !$blacklisted && getConfig("autoconfirm")) {
+         $sendrequest = 0;
+         Sql_Query(sprintf('update %s set confirmed = 1 where email = "%s"',$GLOBALS["tables"]["user"],$email));
+         addUserHistory($email,$history_subject." autoconfirmed",$history_entry);
+   }
+   else if (isset($_SESSION["adminloggedin"]) && $_SESSION["adminloggedin"] && !(isset($_GET['p']) && $_GET['p'] == 'asubscribe')) {
       print '<p class="information"><b>You are logged in as '.$_SESSION["logindetails"]["adminname"].'</b></p>';
       print '<p><a href="'.$adminpages.'" class="button">Back to the main admin page</a></p>';
 
@@ -381,9 +386,7 @@ if (isset($_POST["subscribe"]) && is_email($_POST["email"]) && $listsok && $allt
     }
   } else {
       print $thankyoupage;
-      if ($_SESSION["adminloggedin"]) {
-         print '<p class="information">User has been added and confirmed</p>';
-      }
+      print '<p class="information">User has been added and confirmed</p>';
    }
 
    print '<p class="information">'.$PoweredBy.'</p>';

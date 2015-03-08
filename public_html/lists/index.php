@@ -584,6 +584,9 @@ function checkGroup(name,value)
     $html .= '<p><b>'.s('Please choose').'</b>: <br/><input type=radio name="makeconfirmed" value="1"> '.s('Make this subscriber confirmed immediately').'
       <br/><input type=radio name="makeconfirmed" value="0" checked> '.s('Send this subscriber a request for confirmation email').' </p></div>';
   }
+  else if(getConfig("autoconfirm")){
+    $html .= '<input type="hidden" name="makeconfirmed" value="1">';
+  }
   $html .= '<table border=0>';
   $html .= ListAttributes($attributes,$attributedata,$GLOBALS['pagedata']["htmlchoice"],0,$GLOBALS['pagedata']['emaildoubleentry']);
   $html .= '</table>';

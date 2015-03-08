@@ -646,7 +646,14 @@ Thank you.
   'category'=> 'system',
   'hidden' => true,
   ),
-
+'autoconfirm' => array(
+  'value' => "0",
+  'description' => "Should users be autoconfirmed",
+  'type' => "boolean",
+  'allowempty' => true,
+  'category'=> 'subscription',
+  'hidden' => false,
+  ),
 );
 
 ########## certainly do not edit after this #########
